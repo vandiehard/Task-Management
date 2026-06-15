@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Assign Project{% endblock %}
+{% block content %}
+<div class="container py-4 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0">
+                <div class="card-header"><h5 class="mb-0 fw-bold"><i class="fas fa-user-plus me-2"></i>Assign Project</h5></div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-3">
+                        <strong>{{ project.title }}</strong> - {{ project.get_priority_display }} Priority
+                    </div>
+                    {% if available_programmers %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Select Programmer</label>
+                            <select name="programmer_id" class="form-select" required>
+                                <option value="">-- Choose --</option>
+                                {% for p in available_programmers %}
+                                <option value="{{ p.id }}">{{ p.full_name }} ({{ p.get_skills_display|join:", " }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Assign Project</button>
+                    </form>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-user-slash fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No available programmers at the moment.</p>
+                    </div>
+                    {% endif %}
+                    <a href="{% url 'project_detail' project.id %}" class="btn btn-outline-secondary w-100 mt-2">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

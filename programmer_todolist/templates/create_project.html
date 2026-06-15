@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Create Project{% endblock %}
+{% block content %}
+<div class="container py-4 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0">
+                <div class="card-header"><h5 class="mb-0 fw-bold"><i class="fas fa-plus me-2"></i>Create New Project</h5></div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Title</label>
+                            <input type="text" name="title" class="form-control" value="{{ form.title.value|default:'' }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Description</label>
+                            <textarea name="description" class="form-control" rows="4" required>{{ form.description.value|default:'' }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Requirements</label>
+                            <textarea name="requirements" class="form-control" rows="3">{{ form.requirements.value|default:'' }}</textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-medium">Priority</label>
+                                <select name="priority" class="form-select">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-medium">Deadline</label>
+                                <input type="datetime-local" name="deadline" class="form-control" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-medium">Assign To</label>
+                                <select name="assigned_to" class="form-select">
+                                    <option value="">-- Unassigned --</option>
+                                    {% for programmer in available_programmers %}
+                                    <option value="{{ programmer.id }}">{{ programmer.full_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-grow-1">Create Project</button>
+                            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

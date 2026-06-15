@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Approve Submission{% endblock %}
+{% block content %}
+<div class="container py-4 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0">
+                <div class="card-header"><h5 class="mb-0 fw-bold"><i class="fas fa-check-circle me-2"></i>Approve Submission</h5></div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="fw-bold">{{ submission.project.title }}</h6>
+                        <p class="text-muted small">Submitted by: {{ submission.project.assigned_to.full_name }}</p>
+                        <p class="text-muted small">Submitted at: {{ submission.submitted_at|date:"M d, Y H:i" }}</p>
+                    </div>
+                    {% if submission.notes %}
+                    <div class="mb-3 p-3 bg-light rounded">
+                        <small class="text-muted d-block mb-1">Notes from programmer:</small>
+                        <p class="mb-0">{{ submission.notes }}</p>
+                    </div>
+                    {% endif %}
+                    <div class="mb-3">
+                        <a href="{{ submission.submitted_file.url }}" class="btn btn-outline-primary w-100" target="_blank">
+                            <i class="fas fa-download me-1"></i>Download Submitted File
+                        </a>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Approval Notes (optional)</label>
+                            <textarea name="approval_notes" class="form-control" rows="3" placeholder="Feedback for the programmer..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Approve Submission</button>
+                    </form>
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary w-100 mt-2">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

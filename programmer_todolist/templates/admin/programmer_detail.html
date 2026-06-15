@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}{{ programmer.full_name }}{% endblock %}
+{% block content %}
+<div class="container py-4 fade-in">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card border-0">
+                <div class="card-body text-center">
+                    {% if programmer.profile_picture %}
+                    <img src="{{ programmer.profile_picture.url }}" class="rounded-circle profile-pic mb-3" width="80" height="80">
+                    {% else %}
+                    <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width:80px;height:80px;">
+                        <i class="fas fa-user fa-2x"></i>
+                    </div>
+                    {% endif %}
+                    <h5 class="fw-bold mb-1">{{ programmer.full_name }}</h5>
+                    <p class="text-muted small">{{ programmer.email }}</p>
+                    {% if programmer.is_available %}<span class="badge bg-success">Available</span>
+                    {% else %}<span class="badge bg-secondary">Busy</span>{% endif %}
+                    <div class="row mt-3 text-center">
+                        <div class="col-3"><strong>{{ total_projects }}</strong><br><small class="text-muted">Total</small></div>
+                        <div class="col-3"><strong>{{ completed_projects }}</strong><br><small class="text-muted">Done</small></div>
+                        <div class="col-3"><strong>{{ in_progress_projects }}</strong><br><small class="text-muted">Active</small></div>
+                        <div class="col-3"><strong>{{ pending_projects }}</strong><br><small class="text-muted">Pending</small></div>
+                    </div>
+                    {% if programmer.skills %}
+                    <div class="mt-3">
+                        {% for skill in programmer.get_skills_display %}
+                        <span class="badge bg-secondary">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card border-0">
+                <div class="card-header"><h5 class="mb-0 fw-bold">Projects</h5></div>
+                <div class="card-body">
+                    {% if projects %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead><tr><th>Project</th><th>Status</th><th>Priority</th><th>Deadline</th></tr></thead>
+                            <tbody>
+                                {% for project in projects %}
+                                <tr>
+                                    <td><a href="{% url 'project_detail' project.id %}" class="text-dark fw-medium">{{ project.title }}</a></td>
+                                    <td><span class="badge bg-{% if project.status == 'approved' %}success{% elif project.status == 'in_progress' %}primary{% elif project.status == 'completed' %}secondary{% else %}info{% endif %}">{{ project.get_status_display }}</span></td>
+                                    <td>{{ project.get_priority_display }}</td>
+                                    <td><small>{{ project.deadline|date:"M d, Y" }}</small></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted text-center py-3">No projects assigned yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'programmer_list' %}" class="btn btn-outline-secondary mt-3"><i class="fas fa-arrow-left me-1"></i>Back</a>
+</div>
+{% endblock %}

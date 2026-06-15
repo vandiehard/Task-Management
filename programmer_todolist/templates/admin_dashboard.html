@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-4 fade-in">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="mb-0 fw-bold"><i class="fas fa-chart-line me-2"></i>Admin Dashboard</h2>
+            <p class="text-muted">Manage programmers and projects</p>
+        </div>
+        <div class="col-auto">
+            <a href="{% url 'create_project' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i>Create Project
+            </a>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4 g-3">
+        <div class="col-md-3">
+            <div class="stat-card stat-card-dark">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <small class="text-white-50">Total Projects</small>
+                        <h3 class="mb-0 fw-bold">{{ total_projects }}</h3>
+                    </div>
+                    <i class="fas fa-project-diagram fa-2x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-card-medium">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <small class="text-white-50">Completed</small>
+                        <h3 class="mb-0 fw-bold">{{ completed_projects }}</h3>
+                    </div>
+                    <i class="fas fa-check-circle fa-2x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-card-outline">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <small class="text-muted">Available Programmers</small>
+                        <h3 class="mb-0 fw-bold">{{ available_programmers.count }}</h3>
+                    </div>
+                    <i class="fas fa-users fa-2x text-muted"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-card-light">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <small>Pending Submissions</small>
+                        <h3 class="mb-0 fw-bold">{{ pending_submissions.count }}</h3>
+                    </div>
+                    <i class="fas fa-clock fa-2x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <!-- Available Programmers -->
+        <div class="col-md-6">
+            <div class="card border-0 h-100">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-users me-2"></i>Available Programmers</h5>
+                        <a href="{% url 'programmer_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if available_programmers %}
+                    <div class="list-group list-group-flush">
+                        {% for programmer in available_programmers|slice:":5" %}
+                        <div class="list-group-item border-0 px-0">
+                            <div class="d-flex align-items-center">
+                                {% if programmer.profile_picture %}
+                                <img src="{{ programmer.profile_picture.url }}" class="rounded-circle me-3 profile-pic" width="45" height="45">
+                                {% else %}
+                                <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                {% endif %}
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0 fw-bold">{{ programmer.full_name }}</h6>
+                                    <small class="text-muted">@{{ programmer.user.username }}</small>
+                                    <div class="mt-1">
+                                        {% for skill in programmer.get_skills_display|slice:":2" %}
+                                        <span class="badge bg-secondary me-1">{{ skill }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <span class="badge bg-success">Available</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-user-plus fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No available programmers</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Projects -->
+        <div class="col-md-6">
+            <div class="card border-0 h-100">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-project-diagram me-2"></i>Recent Projects</h5>
+                        <a href="{% url 'project_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if projects %}
+                    <div class="list-group list-group-flush">
+                        {% for project in projects|slice:":5" %}
+                        <div class="list-group-item border-0 px-0">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1 fw-bold">{{ project.title }}</h6>
+                                    <p class="mb-1 text-muted small">{{ project.description|truncatewords:8 }}</p>
+                                    <small class="text-muted"><i class="fas fa-calendar me-1"></i>{{ project.deadline|date:"M d, Y" }}</small>
+                                </div>
+                                <div>
+                                    {% if project.status == 'pending' %}<span class="badge bg-warning">Pending</span>
+                                    {% elif project.status == 'assigned' %}<span class="badge bg-info">Assigned</span>
+                                    {% elif project.status == 'in_progress' %}<span class="badge bg-primary">In Progress</span>
+                                    {% elif project.status == 'completed' %}<span class="badge bg-secondary">Completed</span>
+                                    {% elif project.status == 'approved' %}<span class="badge bg-success">Approved</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No projects yet</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0">
+                <div class="card-header">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3"><a href="{% url 'create_project' %}" class="btn btn-outline-primary w-100"><i class="fas fa-plus me-2"></i>Create Project</a></div>
+                        <div class="col-md-3"><a href="{% url 'programmer_list' %}" class="btn btn-outline-secondary w-100"><i class="fas fa-users me-2"></i>Manage Programmers</a></div>
+                        <div class="col-md-3"><a href="{% url 'project_list' %}" class="btn btn-outline-primary w-100"><i class="fas fa-tasks me-2"></i>View All Projects</a></div>
+                        <div class="col-md-3"><a href="{% url 'project_statistics' %}" class="btn btn-outline-secondary w-100"><i class="fas fa-chart-bar me-2"></i>Statistics</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

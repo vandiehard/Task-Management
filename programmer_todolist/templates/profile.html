@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="container py-4 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0">
+                <div class="card-header">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-user-edit me-2"></i>Edit Profile</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="text-center mb-4">
+                            {% if profile.profile_picture %}
+                            <img src="{{ profile.profile_picture.url }}" class="rounded-circle profile-pic mb-2" width="100" height="100">
+                            {% else %}
+                            <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 100px; height: 100px;">
+                                <i class="fas fa-user fa-2x"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-medium">Full Name</label>
+                                <input type="text" name="full_name" class="form-control" value="{{ profile.full_name }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-medium">Email</label>
+                                <input type="email" name="email" class="form-control" value="{{ profile.email }}">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Phone</label>
+                            <input type="text" name="phone" class="form-control" value="{{ profile.phone }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Profile Picture</label>
+                            <input type="file" name="profile_picture" class="form-control" accept="image/*">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-medium mb-2">Skills</label>
+                            <div class="row g-2">
+                                {% for code, name in profile.SKILL_CHOICES %}
+                                <div class="col-4 col-md-3">
+                                    <label class="skill-card position-relative">
+                                        <input type="checkbox" name="skills" value="{{ code }}" class="skill-checkbox"
+                                            {% if code in profile.skills %}checked{% endif %}>
+                                        <span class="skill-label">{{ name }}</span>
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

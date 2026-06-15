@@ -1,0 +1,338 @@
+/* Monochrome Design System */
+
+:root {
+    --white: #FFFFFF;
+    --bg: #F5F5F5;
+    --card: #FFFFFF;
+    --text: #1A1A1A;
+    --text-secondary: #737373;
+    --text-muted: #A3A3A3;
+    --border: #E5E5E5;
+    --active: #000000;
+    --hover-bg: #EEEEEE;
+    --shadow: rgba(0, 0, 0, 0.06);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* Navbar - Monochrome */
+.navbar {
+    background: var(--active) !important;
+    box-shadow: 0 1px 3px var(--shadow);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--white) !important;
+    letter-spacing: -0.5px;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.7) !important;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--white) !important;
+}
+
+/* Buttons - Monochrome */
+.btn-primary {
+    background: var(--active);
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    color: var(--white);
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    color: var(--white);
+}
+
+.btn-outline-primary {
+    color: var(--active);
+    border-color: var(--active);
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.btn-outline-primary:hover {
+    background: var(--active);
+    border-color: var(--active);
+    color: var(--white);
+}
+
+.btn-outline-info {
+    color: var(--text-secondary);
+    border-color: var(--border);
+}
+
+.btn-outline-info:hover {
+    background: var(--bg);
+    color: var(--text);
+    border-color: var(--text-secondary);
+}
+
+.btn-outline-success {
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.btn-outline-success:hover {
+    background: var(--active);
+    color: var(--white);
+    border-color: var(--active);
+}
+
+.btn-outline-secondary {
+    color: var(--text-secondary);
+    border-color: var(--border);
+}
+
+.btn-outline-secondary:hover {
+    background: var(--text-secondary);
+    color: var(--white);
+    border-color: var(--text-secondary);
+}
+
+.btn-success {
+    background: var(--active);
+    border-color: var(--active);
+}
+
+.btn-success:hover {
+    background: #333;
+    border-color: #333;
+}
+
+.btn-warning {
+    background: var(--text-secondary);
+    border-color: var(--text-secondary);
+    color: var(--white);
+}
+
+.btn-danger {
+    background: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Cards - Monochrome */
+.card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px var(--shadow);
+    transition: all 0.2s ease;
+    background: var(--card);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card-header {
+    background: var(--bg) !important;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+}
+
+/* Badge - Monochrome */
+.badge {
+    border-radius: 20px;
+    font-size: 0.72em;
+    padding: 0.4em 0.75em;
+    font-weight: 500;
+}
+
+.badge.bg-primary { background: var(--active) !important; }
+.badge.bg-secondary { background: var(--text-secondary) !important; }
+.badge.bg-success { background: var(--active) !important; }
+.badge.bg-info { background: var(--text-secondary) !important; color: var(--white) !important; }
+.badge.bg-warning { background: var(--text-muted) !important; color: var(--white) !important; }
+.badge.bg-danger { background: #dc3545 !important; }
+
+/* Forms */
+.form-control, .form-select {
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+    color: var(--text);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--active);
+    box-shadow: 0 0 0 0.2rem rgba(0,0,0,0.1);
+    color: var(--text);
+}
+
+/* Table */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    border-bottom: 2px solid var(--border);
+    background: var(--bg);
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table-hover tbody tr:hover {
+    background: var(--hover-bg);
+}
+
+/* Alerts */
+.alert {
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    background: #f0f0f0;
+    color: var(--text);
+    border-left: 3px solid var(--active);
+}
+
+.alert-danger, .alert-error {
+    background: #fef2f2;
+    color: #991b1b;
+    border-left: 3px solid #dc3545;
+}
+
+.alert-warning {
+    background: #fafafa;
+    color: var(--text-secondary);
+    border-left: 3px solid var(--text-muted);
+}
+
+.alert-info {
+    background: var(--bg);
+    color: var(--text-secondary);
+    border-left: 3px solid var(--text-secondary);
+}
+
+/* Stat Cards - Monochrome */
+.stat-card {
+    border-radius: 8px;
+    padding: 1.25rem;
+    color: var(--white);
+}
+
+.stat-card-dark { background: var(--active); }
+.stat-card-medium { background: var(--text-secondary); }
+.stat-card-light { background: var(--text-muted); color: var(--text); }
+.stat-card-outline { background: var(--white); border: 1px solid var(--border); color: var(--text); }
+
+/* Skill Cards */
+.skill-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.skill-card:hover {
+    border-color: var(--active);
+    background: var(--hover-bg);
+}
+
+.skill-card:has(.skill-checkbox:checked) {
+    border-color: var(--active);
+    background: var(--active);
+    color: var(--white);
+}
+
+.skill-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.skill-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 0;
+    pointer-events: none;
+}
+
+/* Profile Picture */
+.profile-pic {
+    object-fit: cover;
+    border: 2px solid var(--border);
+    transition: all 0.2s ease;
+}
+
+.profile-pic:hover {
+    border-color: var(--active);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+/* List Group */
+.list-group-item {
+    border-color: var(--border);
+    transition: background 0.2s;
+}
+
+.list-group-item:hover {
+    background: var(--hover-bg);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeIn 0.4s ease-out; }
+
+/* Login / Register Page */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .skill-card { height: 45px; padding: 8px; }
+    .skill-label { font-size: 0.72rem; }
+}
