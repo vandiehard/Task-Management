@@ -5,16 +5,16 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card border-0">
-                <div class="card-header"><h5 class="mb-0 fw-bold"><i class="fas fa-check-circle me-2"></i>Approve Submission</h5></div>
+                <div class="card-header"><h5 class="mb-0 fw-bold"><i class="fas fa-check-circle me-2 text-success"></i>Approve Submission</h5></div>
                 <div class="card-body">
-                    <div class="mb-3">
-                        <h6 class="fw-bold">{{ submission.project.title }}</h6>
-                        <p class="text-muted small">Submitted by: {{ submission.project.assigned_to.full_name }}</p>
-                        <p class="text-muted small">Submitted at: {{ submission.submitted_at|date:"M d, Y H:i" }}</p>
+                    <div class="mb-3 p-3 rounded-3" style="background: var(--bg);">
+                        <h6 class="fw-bold mb-1">{{ submission.project.title }}</h6>
+                        <p class="text-muted small mb-1"><i class="fas fa-user me-1"></i>Submitted by: {{ submission.project.assigned_to.full_name }}</p>
+                        <p class="text-muted small mb-0"><i class="fas fa-clock me-1"></i>Submitted at: {{ submission.submitted_at|date:"M d, Y H:i" }}</p>
                     </div>
                     {% if submission.notes %}
-                    <div class="mb-3 p-3 bg-light rounded">
-                        <small class="text-muted d-block mb-1">Notes from programmer:</small>
+                    <div class="mb-3 p-3 rounded-3" style="background: var(--info-bg); border-left: 3px solid var(--info);">
+                        <small class="text-muted d-block mb-1 fw-semibold">Notes from programmer:</small>
                         <p class="mb-0">{{ submission.notes }}</p>
                     </div>
                     {% endif %}
@@ -26,10 +26,12 @@
                     <form method="post">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label class="form-label fw-medium">Approval Notes (optional)</label>
+                            <label class="form-label">Approval Notes <span class="text-muted fw-normal">(optional)</span></label>
                             <textarea name="approval_notes" class="form-control" rows="3" placeholder="Feedback for the programmer..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Approve Submission</button>
+                        <button type="submit" class="btn btn-success w-100 py-2">
+                            <i class="fas fa-check-circle me-2"></i>Approve Submission
+                        </button>
                     </form>
                     <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary w-100 mt-2">Cancel</a>
                 </div>

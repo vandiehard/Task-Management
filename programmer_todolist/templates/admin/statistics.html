@@ -2,19 +2,19 @@
 {% block title %}Statistics{% endblock %}
 {% block content %}
 <div class="container py-4 fade-in">
-    <h3 class="fw-bold mb-4"><i class="fas fa-chart-bar me-2"></i>Project Statistics</h3>
+    <h3 class="fw-bold mb-4"><i class="fas fa-chart-bar me-2 text-info"></i>Project Statistics</h3>
 
     <div class="row g-3 mb-4">
         <div class="col-md-6">
             <div class="card border-0">
-                <div class="card-header"><h6 class="mb-0 fw-bold">Projects by Status</h6></div>
+                <div class="card-header"><h6 class="mb-0 fw-bold"><i class="fas fa-tasks me-2 text-primary"></i>Projects by Status</h6></div>
                 <div class="card-body">
                     {% for status, count in projects_by_status.items %}
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="text-capitalize">{{ status }}</span>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-capitalize fw-medium small" style="min-width:90px;">{{ status }}</span>
                         <div class="d-flex align-items-center" style="flex: 1; margin-left: 1rem;">
-                            <div class="bg-dark rounded" style="height: 8px; width: {% widthratio count projects_by_status.values|length 100 %}%"></div>
-                            <span class="ms-2 fw-bold small">{{ count }}</span>
+                            <div class="rounded-pill" style="height: 10px; width: {% widthratio count projects_by_status.values|length 100 %}%; background: linear-gradient(90deg, var(--primary), var(--violet)); min-width: 4px;"></div>
+                            <span class="ms-2 fw-bold small badge bg-primary">{{ count }}</span>
                         </div>
                     </div>
                     {% endfor %}
@@ -23,14 +23,14 @@
         </div>
         <div class="col-md-6">
             <div class="card border-0">
-                <div class="card-header"><h6 class="mb-0 fw-bold">Projects by Priority</h6></div>
+                <div class="card-header"><h6 class="mb-0 fw-bold"><i class="fas fa-signal me-2 text-warning"></i>Projects by Priority</h6></div>
                 <div class="card-body">
                     {% for priority, count in projects_by_priority.items %}
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="text-capitalize">{{ priority }}</span>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-capitalize fw-medium small" style="min-width:90px;">{{ priority }}</span>
                         <div class="d-flex align-items-center" style="flex: 1; margin-left: 1rem;">
-                            <div class="bg-secondary rounded" style="height: 8px; width: {% widthratio count projects_by_priority.values|length 100 %}%"></div>
-                            <span class="ms-2 fw-bold small">{{ count }}</span>
+                            <div class="rounded-pill" style="height: 10px; width: {% widthratio count projects_by_priority.values|length 100 %}%; background: linear-gradient(90deg, var(--success), #34D399); min-width: 4px;"></div>
+                            <span class="ms-2 fw-bold small badge bg-success">{{ count }}</span>
                         </div>
                     </div>
                     {% endfor %}
@@ -42,31 +42,31 @@
     <div class="row g-3">
         <div class="col-md-6">
             <div class="card border-0">
-                <div class="card-header"><h6 class="mb-0 fw-bold">Recent Projects</h6></div>
+                <div class="card-header"><h6 class="mb-0 fw-bold"><i class="fas fa-clock me-2 text-violet"></i>Recent Projects</h6></div>
                 <div class="card-body">
                     {% for project in recent_projects %}
                     <div class="d-flex justify-content-between align-items-center py-2 {% if not forloop.last %}border-bottom{% endif %}">
                         <div>
                             <strong class="small">{{ project.title }}</strong>
-                            <br><small class="text-muted">{{ project.created_at|date:"M d, Y" }}</small>
+                            <br><small class="text-muted"><i class="fas fa-calendar-alt me-1"></i>{{ project.created_at|date:"M d, Y" }}</small>
                         </div>
                         <span class="badge bg-{% if project.status == 'approved' %}success{% elif project.status == 'in_progress' %}primary{% else %}secondary{% endif %}">{{ project.get_status_display }}</span>
                     </div>
                     {% empty %}
-                    <p class="text-muted text-center">No projects yet</p>
+                    <div class="empty-state"><i class="fas fa-inbox d-block mb-2"></i><p class="text-muted mb-0">No projects yet</p></div>
                     {% endfor %}
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card border-0">
-                <div class="card-header"><h6 class="mb-0 fw-bold">Recent Submissions</h6></div>
+                <div class="card-header"><h6 class="mb-0 fw-bold"><i class="fas fa-paper-plane me-2 text-success"></i>Recent Submissions</h6></div>
                 <div class="card-body">
                     {% for sub in recent_submissions %}
                     <div class="d-flex justify-content-between align-items-center py-2 {% if not forloop.last %}border-bottom{% endif %}">
                         <div>
                             <strong class="small">{{ sub.project.title }}</strong>
-                            <br><small class="text-muted">{{ sub.submitted_at|date:"M d, Y" }}</small>
+                            <br><small class="text-muted"><i class="fas fa-calendar-alt me-1"></i>{{ sub.submitted_at|date:"M d, Y" }}</small>
                         </div>
                         {% if sub.is_approved %}<span class="badge bg-success">Approved</span>
                         {% else %}
@@ -74,7 +74,7 @@
                         {% endif %}
                     </div>
                     {% empty %}
-                    <p class="text-muted text-center">No submissions yet</p>
+                    <div class="empty-state"><i class="fas fa-inbox d-block mb-2"></i><p class="text-muted mb-0">No submissions yet</p></div>
                     {% endfor %}
                 </div>
             </div>

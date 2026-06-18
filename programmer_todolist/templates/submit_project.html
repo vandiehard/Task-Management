@@ -5,23 +5,25 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card border-0">
-                <div class="card-header"><h5 class="mb-0 fw-bold"><i class="fas fa-upload me-2"></i>Submit Project</h5></div>
+                <div class="card-header"><h5 class="mb-0 fw-bold"><i class="fas fa-upload me-2 text-warning"></i>Submit Project</h5></div>
                 <div class="card-body">
                     <div class="alert alert-info mb-3">
-                        <strong>{{ project.title }}</strong><br>
-                        <small class="text-muted">Submit your completed work for review.</small>
+                        <i class="fas fa-folder-open me-2"></i><strong>{{ project.title }}</strong><br>
+                        <small>Submit your completed work for review.</small>
                     </div>
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label class="form-label fw-medium">Upload File</label>
+                            <label class="form-label">Upload File</label>
                             <input type="file" name="submitted_file" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-medium">Notes</label>
+                            <label class="form-label">Notes <span class="text-muted fw-normal">(optional)</span></label>
                             <textarea name="notes" class="form-control" rows="3" placeholder="Any notes about your submission..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Submit for Review</button>
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="fas fa-paper-plane me-2"></i>Submit for Review
+                        </button>
                     </form>
                     <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary w-100 mt-2">Cancel</a>
                 </div>

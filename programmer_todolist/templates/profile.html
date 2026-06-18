@@ -8,41 +8,43 @@
         <div class="col-md-8">
             <div class="card border-0">
                 <div class="card-header">
-                    <h5 class="mb-0 fw-bold"><i class="fas fa-user-edit me-2"></i>Edit Profile</h5>
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-user-edit me-2 text-primary"></i>Edit Profile</h5>
                 </div>
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="text-center mb-4">
-                            {% if profile.profile_picture %}
-                            <img src="{{ profile.profile_picture.url }}" class="rounded-circle profile-pic mb-2" width="100" height="100">
-                            {% else %}
-                            <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 100px; height: 100px;">
-                                <i class="fas fa-user fa-2x"></i>
+                            <div class="position-relative d-inline-block">
+                                {% if profile.profile_picture %}
+                                <img src="{{ profile.profile_picture.url }}" class="rounded-circle profile-pic mb-2" width="110" height="110">
+                                {% else %}
+                                <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 110px; height: 110px; background: linear-gradient(135deg, var(--primary), var(--violet));">
+                                    <i class="fas fa-user fa-3x text-white"></i>
+                                </div>
+                                {% endif %}
+                                <label for="profile-pic-input" class="position-absolute bottom-0 end-0 btn btn-sm btn-primary rounded-circle" style="width:32px;height:32px;padding:0;cursor:pointer;" title="Change photo">
+                                    <i class="fas fa-camera" style="font-size:0.7rem;"></i>
+                                </label>
+                                <input type="file" name="profile_picture" id="profile-pic-input" class="d-none" accept="image/*">
                             </div>
-                            {% endif %}
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-medium">Full Name</label>
+                                <label class="form-label">Full Name</label>
                                 <input type="text" name="full_name" class="form-control" value="{{ profile.full_name }}">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-medium">Email</label>
+                                <label class="form-label">Email</label>
                                 <input type="email" name="email" class="form-control" value="{{ profile.email }}">
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-medium">Phone</label>
+                        <div class="mb-4">
+                            <label class="form-label">Phone</label>
                             <input type="text" name="phone" class="form-control" value="{{ profile.phone }}">
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-medium">Profile Picture</label>
-                            <input type="file" name="profile_picture" class="form-control" accept="image/*">
-                        </div>
                         <div class="mb-4">
-                            <label class="form-label fw-medium mb-2">Skills</label>
+                            <label class="form-label mb-3">Skills <span class="text-muted fw-normal">(select all that apply)</span></label>
                             <div class="row g-2">
                                 {% for code, name in profile.SKILL_CHOICES %}
                                 <div class="col-4 col-md-3">
@@ -55,7 +57,9 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="fas fa-save me-2"></i>Save Changes
+                        </button>
                     </form>
                 </div>
             </div>
